@@ -1,1 +1,1 @@
-{"sebastian": 100,"marcos":200}
+{"sebastian": 70, "marcos": 200}

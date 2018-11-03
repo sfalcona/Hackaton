@@ -1,0 +1,8 @@
+asd 10 asd True False ['C:\\Pictures\\apple.jpg']
+asd 20 asd True False ['C:\\Pictures\\banana.jpg']
+asd 30 asd True False ['C:\\Pictures\\coca.jpg']
+durazno 20 asd True True ['C:\\Pictures\\durazno.jpg']
+durazno 20 asd True True ['C:\\Pictures\\durazno.jpg']
+durazno 20 asd True True ['C:\\Pictures\\coca.jpg']
+   False False []
+hola 123  False False []

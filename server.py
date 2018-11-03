@@ -18,13 +18,13 @@ class S(http.server.BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers()
-        f = open('cuentas.txt', 'r')
-        data = json.loads(f.read())
-        for key,value in data.items():
-            print(text)
-            if key == text:
-                self.wfile.write(str(value).encode('ascii'))
-        f.close()
+        # Text es el nombre del usuario que quiero leer
+        with open('cuentas.txt', 'r') as f:
+            data = json.loads(f.read())
+            for key,value in data.items():
+                if key == text:
+                    self.wfile.write(str(value).encode('ascii'))
+
 
     def do_GET(self):
         '''Callback para GETs'''
@@ -35,7 +35,28 @@ class S(http.server.BaseHTTPRequestHandler):
         except IndexError:
             pass
 
+    def do_POST(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+        self.data_string = self.rfile.read(int(self.headers['Content-Length']))
+        recibo = self.data_string.decode("utf-8")
+        datos = recibo.rsplit('=')
+        # Datos[0] es el nombre, datos[1] es el nuevo monto
+        with open('cuentas.txt', 'r') as f:
+            data = json.loads(f.read())
+            for key,value in data.items():
+                if key == datos[0]:
+                    print(key + str(value))
+                    data[key] = value - int(datos[1])
+        
+        with open('cuentas.txt', 'w') as f:
+            json.dump(data, f)
 
+        self.send_response(200)
+        self.end_headers()
+
+        
 
     def do_HEAD(self):
         self._set_headers()
