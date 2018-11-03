@@ -93,35 +93,75 @@ ScreenManagement:
 	fullscreen: True
 	BoxLayout:
 	    orientation: 'vertical'
+		size_hint: (None, None)
+		size: (root.width, 200)
+		# pos: (root.width/2 - self.width/2, root.height/2 - self.height/2)
+		pos: (0, root.height - self.height)
 		canvas.before:
 			Color:
 				rgb: 1, 0.5, 0
 			Rectangle:
-				size: self.size
+				size: root.size
 		Button:
-			text: 'HISTORIAL' 
-	        on_release: root.goToCalledScreen("Historial")
+			text: 'HISTORIAL'
+			on_release: root.goToCalledScreen("Historial")
+			Image:
+				size:(self.parent.width/10, self.parent.height/2)
+		        source: "./images/history.PNG"
+		        center_x: self.width
+		        center_y: self.parent.center_y
+			
 		Button:
 			text: 'CARGAR'
 	        on_release: root.goToCalledScreen("Cargar")
+			Image:
+				size:(self.parent.width/10, self.parent.height/2)
+		        source: "./images/history.PNG"
+		        center_x: self.width
+		        center_y: self.parent.center_y
+
 		Button:
 			text: 'DESCARGAR'
 	        on_release: root.goToCalledScreen("Retirar")
+			Image:
+				size:(self.parent.width/10, self.parent.height/2)
+		        source: "./images/history.PNG"
+		        center_x: self.width
+		        center_y: self.parent.center_y	        
 
 <HistoryScreen>:
 	name: "Historial"
 	fullscreen: True
 	BoxLayout:
 	    orientation: 'vertical'
+		size_hint: (None, None)
+		size: (root.width, 200)
+		# pos: (root.width/2 - self.width/2, root.height/2 - self.height/2)
+		pos: (0, root.height - self.height)
 		canvas.before:
 			Color:
 				rgb: 1, 0.5, 0
 			Rectangle:
-				size: self.size
-	Button:
-		text: 'HOME' 
-        on_release:
-        	root.goToHomeScreen()
+				size: root.size
+		ScrollView:
+			id: Scroll
+	        size_hint: (None, None)
+	        size: (400, 400)
+	
+		Button:
+			orientation: 'horizontal'
+			size: (root.width/10, root.height/20)
+	        source: "./images/history.PNG"
+	        center_x: self.width
+	        center_y: self.parent.center_y
+	        on_release:
+	        	root.goToHomeScreen()
+			Image:
+				size:(self.parent.width/2, self.parent.height/2)
+		        source: "./images/history.PNG"
+		        center_x: self.parent.center_x
+		        center_y: self.parent.center_y
+
 
 <ChargeScreen>:
 	name: "Cargar"

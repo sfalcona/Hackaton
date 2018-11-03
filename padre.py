@@ -7,12 +7,21 @@ from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 from kivy.uix.widget import Widget
 from kivy.uix.label import Label
 from kivy.graphics import Line
-
+from kivy.uix.scrollview import ScrollView
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.button import Button
+from kivy.core.window import Window
 from kivy.clock import Clock
 
 from kivy.graphics import *
 
 from kivy.config import Config
+
+
+
+from pymongo import MongoClient
+import pymongo
+import re
 
 Config.set('graphics', 'position', 'custom')
 Config.set('graphics', 'left', 50)
@@ -63,6 +72,21 @@ class HomeScreen(Screen):
         self.parent.current = nextScreen
 
 class HistoryScreen(Screen):
+    def on_enter(self):
+        client = MongoClient()
+        db = client.Hackaton
+        compras = db.Sebas
+        layout = GridLayout(cols=1, spacing=10, size_hint = (1,1))
+        # Make sure the height is such that there is something to scroll.
+        layout.bind(minimum_height=layout.setter('height'))
+        for myDoc in compras.find():
+            label = Label(text=myDoc["comida"] , size_hint_y=1, height=40)
+            layout.add_widget(label)
+
+        self.ids.Scroll.add_widget(layout)
+        client.close()
+        # self.goToHomeScreen()
+
     def goToHomeScreen(self, *args):
         self.parent.current = "Home"
 
