@@ -3,6 +3,7 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 
+
 from kivy.uix.widget import Widget
 from kivy.uix.label import Label
 from kivy.graphics import Line
@@ -12,6 +13,7 @@ from kivy.clock import Clock
 from kivy.graphics import *
 
 from kivy.config import Config
+
 Config.set('graphics', 'position', 'custom')
 Config.set('graphics', 'left', 50)
 Config.set('graphics', 'top',  50)
@@ -39,22 +41,33 @@ class LogoScreen(Screen):
         Clock.schedule_once(self.changeScreen, 1)
 
     def changeScreen(self, *args):
-        self.parent.current = "other"
+        self.parent.current = "auth"
 
 class AnotherScreen(Screen):
-	pass
+    def buttonCallback(self):
+        self.parent.current = "option"
+        print("fui a opciones")
+
+class OptionScreen(Screen):
+    def buttonCallback(self):
+        self.parent.current = "main"
+        print("volvi a menu")
+
+class AuthScreen(Screen):
+    pass
 
 class ScreenManagement(ScreenManager):
     pass
 
 
 
+presentation = Builder.load_file('main2.kv')
+
 
 class MainApp(App):
     def build(self):
         return presentation
-    def printalgo(self):
-    	print("algo")
+    
 
 if __name__ == "__main__":
     MainApp().run()
