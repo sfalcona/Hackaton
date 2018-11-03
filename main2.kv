@@ -3,7 +3,7 @@
 ScreenManagement:
 	transition: FadeTransition()
 	LogoScreen:
-	AnotherScreen:
+	MainScreen:
 	OptionScreen:
 	AuthScreen:
 	
@@ -18,7 +18,8 @@ ScreenManagement:
 		source: "logo.png"
 
 		
-<AnotherScreen>:
+<MainScreen>:
+	saldo : saldo
 	name: "main"
 	fullscreen: True
 	canvas.before:
@@ -40,13 +41,23 @@ ScreenManagement:
 	        	markup: True
 	            title: "[size=25dp][font=font]'      SIMPLEPLAY'[/font][/size]"
 	            with_previous: False
+	Image:
+		id: qr
+		source: "code.png"
+	Label:
+		id: saldo
+		pos: (root.width/2 - self.width/2, -qr.height/4)
+		color: 0,0,0,1
+		font_size: 40
+		markup: True
+		text: "[font=font]'SALDO'[/font]"
 
 <OptionScreen>:
 	name: "option"
 	fullscreen: True
 	canvas.before:
 		Color:
-			rgb: 1, .1, .1
+			rgb: 1, 1, 1
 		Rectangle:
 			size: self.size
 	ActionBar:
@@ -67,15 +78,45 @@ ScreenManagement:
 <AuthScreen>:
 	name: "auth"
 	fullscreen: True
+	nameT : nameText
+	passwT : passText
+	nameL: nameLabel
+	passL: passLabel
 	BoxLayout:
-	    orientation: 'vertical'
 		canvas.before:
 			Color:
 				rgb: 1, 0.5, 0
 			Rectangle:
-				size: self.size
+				size: root.size
+
+		size_hint: (None, None)
+		size: (200, 200)
+		pos: (root.width/2 - self.width/2, root.height/2 - self.height/2)
+	    orientation: 'vertical'
+	    Label:
+	    	id: nameLabel
+	    	markup: True
+	    	color: 0,0,0,1
+	    	font_size: 20
+	    	text: 'Usuario'
 		TextInput:
-			text: 'Nombre'
+			id : nameText
+			hint_text: 'Usuario'
+			multiline: False
+		Label:
+			id: passLabel
+			markup: True
+			color: 0,0,0,1
+			font_size : 20
+			text: 'Contrasena'
 		TextInput:
-			text: 'Password'
+			id : passText
+			hint_text: 'Contrasena'
 			password: True
+			multiline: False
+
+		Button:
+			text: 'Entrar'
+			on_release: 
+				root.manager.transition = NoTransition()
+				root.saveData()
