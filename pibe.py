@@ -26,17 +26,6 @@ Config.set('graphics', 'width', '300')
 Config.set('graphics', 'height', '500')
 
 
-
-class Painter(Widget):
-    
-    def on_touch_down(self, touch):
-        with self.canvas:
-            touch.ud["line"] = Line(points=(touch.x, touch.y))
-
-    def on_touch_move(self,touch):
-        touch.ud["line"].points += [touch.x, touch.y]
-
-            
 class LogoScreen(Screen):
     def __init__(self,**kwargs):
             super(LogoScreen, self).__init__(**kwargs)
@@ -45,7 +34,7 @@ class LogoScreen(Screen):
         self.displayScreenThenLeave()
 
     def displayScreenThenLeave(self):
-        Clock.schedule_once(self.changeScreen, 1)
+        Clock.schedule_once(self.changeScreen, 2)
 
     def changeScreen(self, *args):
         self.parent.current = "auth"
@@ -59,7 +48,7 @@ class MainScreen(Screen):
         r = requests.get('http://127.0.0.1/?name=' + self.manager.myName, auth=('user', 'pass'))
         mySaldo = r.text
         self.saldo.text =  'SALDO ' + mySaldo 
-        Clock.schedule_once(self.updateVal, 0.5)
+        Clock.schedule_once(self.updateVal, 5)
         print('request')
 
     def buttonCallback(self):
@@ -67,9 +56,12 @@ class MainScreen(Screen):
         print("fui a opciones")
 
 class OptionScreen(Screen):
+    def logout(self):
+        self.parent.current = "auth"
+
     def buttonCallback(self):
         self.parent.current = "main"
-        print("volvi a menu")
+        # print("volvi a menu")
 
 class AuthScreen(Screen):
     def saveData(self):
@@ -98,7 +90,7 @@ class ScreenManagement(ScreenManager):
 
 
 
-presentation = Builder.load_file('main2.kv')
+presentation = Builder.load_file('pibe.kv')
 
 
 class MainApp(App):

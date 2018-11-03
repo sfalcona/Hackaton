@@ -1,0 +1,215 @@
+#: import NoTransition kivy.uix.screenmanager.NoTransition
+
+ScreenManagement:
+	transition: NoTransition()
+	MainScreen:
+	LoadScreen:
+	PayScreen:
+
+	
+
+<LoadScreen>:
+	name: "load"
+	nameT: nameText
+	priceT: priceText
+	infoT:	infoText
+	diabT: diabCheck
+	celT: celCheck
+	pict: picFile
+	canvas.before:
+		Color:
+			rgb: 1, 0.5, 0
+		Rectangle:
+			size: root.size
+	BoxLayout:
+		padding: 5
+		spacing: 5   
+		size_hint: (None, None)
+		size: root.size
+		pos_hint: {'None': None}
+		pos: (0,-50)
+		
+	    orientation: 'vertical'
+	    Label:
+	    	id: nameLabel
+	    	size_hint: (None, None)
+	    	size: (root.width*0.98, 40)
+	    	markup: True
+	    	color: 0,0,0,1
+	    	font_size: 20
+	    	text: 'Item'
+		TextInput:
+			id : nameText
+			size_hint: (None, None)
+			size: (root.width*0.98, 40)
+			hint_text: 'Item'
+			multiline: False
+		Label:
+	    	id: priceLabel
+	    	size_hint: (None, None)
+	    	size: (root.width*0.98, 40)
+	    	markup: True
+	    	color: 0,0,0,1
+	    	font_size: 20
+	    	text: 'Precio'
+		TextInput:
+			id : priceText
+			size_hint: (None, None)
+			size: (root.width*0.98, 40)
+			hint_text: 'Precio'
+			multiline: False
+		Label:
+			id: infoLabel
+			size_hint: (None, None)
+			size: (root.width*0.98, 40)
+			markup: True
+			color: 0,0,0,1
+			font_size : 20
+			text: 'Informacion'
+		TextInput:
+			id : infoText
+			size_hint: (None, None)
+			size: (root.width*0.98, 40)
+			hint_text: 'Informacion'
+			multiline: False
+		GridLayout:
+			cols: 4
+			size_hint: (None, None)
+			size: (root.width, 80)
+			pos_hint: {'x': 0.25}
+			Label:
+				size_hint: (None, None)
+				text: 'Diabeticos'
+			CheckBox:
+				id: diabCheck
+				size_hint: (None, None)
+			Label:
+				size_hint: (None, None)
+				text: 'Celiacos'
+			CheckBox:
+				id: celCheck
+				size_hint: (None, None)
+		FileChooser:
+			id: picFile
+			name: "Foto"
+			FileChooserListLayout
+
+		
+	ActionBar:
+	    pos_hint: {'top':1}
+	    background_image: 'white-bg.png'
+		background_color: 1,.5,0,1
+	    ActionView:
+	        ActionPrevious:
+	        	on_release: 
+	        		root.manager.transition = NoTransition()
+	        		root.buttonCallback()
+	        	app_icon: 'logo.png'
+	        	markup: True
+	            title: "[size=40dp][font=font]'      CARGAR ITEM'[/font][/size]"
+	            with_previous: False
+	        ActionButton:
+				text: 'Cargar'
+				size_hint: (None, None)
+				size: (root.width*0.98, 40)
+				important: True
+				on_release: 
+					root.manager.transition = NoTransition()
+					root.saveData()
+	    
+
+
+<PayScreen>:
+	name: "pay"
+	nombre: nombre
+	
+	canvas.before:
+		Color:
+			rgb: 1, 1, 1
+		Rectangle:
+			size: self.size
+	ActionBar:
+		id: barra
+	    pos_hint: {'top':1}
+	    background_image: 'white-bg.png'
+		background_color: 1,.5,0,1
+	    ActionView:
+	        use_separator: True
+	        ActionPrevious:
+	        	on_release: 
+	        		root.manager.transition = NoTransition()
+	        		root.buttonCallback()
+	        	app_icon: 'logo.png'
+	        	markup: True
+	            title: "[size=40dp][font=font]'      COBRAR ITEMS'[/font][/size]"
+	            with_previous: False
+	ScrollView:
+		id: scroll
+		size_hint_y: None
+		pos: (0,root.height - self.height - barra.height)
+		height: 400
+	TextInput:
+		id: nombre
+		hint_text: "Nombre Comprador"
+		size_hint_y: 0.1
+		size_hint_x: 1
+		pos:(0, 10 + cobrar.height)
+
+	Button:
+		id: cobrar
+		text: "Cobrar"
+		size_hint_y: 0.1
+		size_hint_x: 1
+		pos:(0, 10)
+		on_release:
+			root.cobrar()
+		
+
+
+<MainScreen>:
+	name: "main"
+	canvas.before:
+		Color:
+			rgb: 1, 1, 1
+		Rectangle:
+			size: self.size
+	ActionBar:
+	    pos_hint: {'top':1}
+	    background_image: 'white-bg.png'
+		background_color: 1,.5,0,1
+	    ActionView:
+	        use_separator: True
+	        ActionPrevious:
+	        	on_release: 
+	        		root.manager.transition = NoTransition()
+	        		root.buttonCallback()
+	        	app_icon: 'logo.png'
+	        	markup: True
+	            title: "[size=40dp][font=font]'      SIMPLEPAY'[/font][/size]"
+	            with_previous: False
+	GridLayout:
+		cols: 2
+		padding: 10
+		spacing: 10
+		size_hint: (None, None)
+		pos_hint: {'None': None}
+		size: (root.width,200)
+		pos: (root.width/2 - self.width/2, root.height/2)
+		Button:
+			text: 'CARGAR ITEM'
+			font_size: 30
+			on_release:
+				root.loadCallback()
+			Image:
+				center_x: self.parent.center_x
+				center_y: self.parent.center_y
+				source: "logoTrans.png"
+		Button:
+			text: 'COBRAR'
+			font_size: 30
+			on_release:
+				root.payCallback()
+			Image:
+				center_x: self.parent.center_x
+				center_y: self.parent.center_y
+				source: "logoTrans.png"

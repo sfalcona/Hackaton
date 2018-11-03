@@ -74,6 +74,15 @@ ScreenManagement:
 	        	markup: True
 	            title: "[size=25dp][font=font]'      OPCIONES'[/font][/size]"
 	            with_previous: False
+	Button:
+		text: 'Salir'
+		size_hint: (None, None)
+
+		pos: (root.width/2 - self.width/2,root.height/2)
+		size: (150, 70)
+		on_release: 
+			root.manager.transition = NoTransition()
+			root.logout()
 		
 <AuthScreen>:
 	name: "auth"
@@ -88,11 +97,17 @@ ScreenManagement:
 				rgb: 1, 0.5, 0
 			Rectangle:
 				size: root.size
-
+		padding: 5
+		spacing: 5   
 		size_hint: (None, None)
-		size: (200, 200)
+		size: (200, 300)
 		pos: (root.width/2 - self.width/2, root.height/2 - self.height/2)
 	    orientation: 'vertical'
+	    Image:
+	    	size_hint: (None, None)
+	    	size_hint_x: 1
+	    	pos: (100, 0)
+	    	source: "logo.png"
 	    Label:
 	    	id: nameLabel
 	    	markup: True
