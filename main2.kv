@@ -1,9 +1,11 @@
 #: import FadeTransition kivy.uix.screenmanager.FadeTransition
-
+#: import NoTransition kivy.uix.screenmanager.NoTransition
 ScreenManagement:
 	transition: FadeTransition()
 	LogoScreen:
 	AnotherScreen:
+	OptionScreen:
+	AuthScreen:
 	
 <LogoScreen>:
 	name: "logo"
@@ -12,13 +14,12 @@ ScreenManagement:
 			rgb: 1, 0.5,0
 		Rectangle:
 			size: self.size
-	Label:
-		text: "Bienvenido"
-		font_size: 50
+	Image:
+		source: "logo.png"
 
 		
 <AnotherScreen>:
-	name: "other"
+	name: "main"
 	fullscreen: True
 	canvas.before:
 		Color:
@@ -26,16 +27,55 @@ ScreenManagement:
 		Rectangle:
 			size: self.size
 	ActionBar:
-		on_previous: app.printalgo()
 	    pos_hint: {'top':1}
 	    background_image: 'white-bg.png'
 		background_color: 1,.5,0,1
 	    ActionView:
 	        use_separator: True
 	        ActionPrevious:
-	        	app_icon: 'pamati.png'
-	            title: 'SimplePay'
+	        	on_release: 
+	        		root.manager.transition = NoTransition()
+	        		root.buttonCallback()
+	        	app_icon: 'logo.png'
+	        	markup: True
+	            title: "[size=25dp][font=font]'      SIMPLEPLAY'[/font][/size]"
 	            with_previous: False
 
-
+<OptionScreen>:
+	name: "option"
+	fullscreen: True
+	canvas.before:
+		Color:
+			rgb: 1, .1, .1
+		Rectangle:
+			size: self.size
+	ActionBar:
+	    pos_hint: {'top':1}
+	    background_image: 'white-bg.png'
+		background_color: 1,.5,0,1
+	    ActionView:
+	        use_separator: True
+	        ActionPrevious:
+	        	on_release: 
+	        		root.manager.transition = NoTransition()
+	        		root.buttonCallback()
+	        	app_icon: 'logo.png'
+	        	markup: True
+	            title: "[size=25dp][font=font]'      OPCIONES'[/font][/size]"
+	            with_previous: False
 		
+<AuthScreen>:
+	name: "auth"
+	fullscreen: True
+	BoxLayout:
+	    orientation: 'vertical'
+		canvas.before:
+			Color:
+				rgb: 1, 0.5, 0
+			Rectangle:
+				size: self.size
+		TextInput:
+			text: 'Nombre'
+		TextInput:
+			text: 'Password'
+			password: True
